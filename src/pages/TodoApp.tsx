@@ -6,6 +6,8 @@ import { EditModal } from "../components/EditModal";
 import { TableDetailsType } from "../Types";
 import { AntdTheme, TableColumns } from "../Constants";
 import { useStore } from "../store/store";
+import { FaRegTrashCan } from "react-icons/fa6";
+import { MdModeEdit } from "react-icons/md";
 
 
 
@@ -24,8 +26,9 @@ const TodoApp = observer(() => {
     name: name.length>10 ? name.slice(0,10) + "...." :name ,
     fullDescription: name,
     done:<div onClick={toggle} className="cursor-pointer">{done?"Done":"Not Done"}</div>,
-    delete:<a onClick={()=>store.deleteTodo(index)}>Delete</a>,
-    edit:<Button onClick={()=>{setIndex(index);setOpen(true)}}>Edit</Button>
+    delete:<a className="flex items-center gap-3 justify-center" onClick={()=>store.deleteTodo(index)}>Delete <FaRegTrashCan className="text-black"/></a>,
+    edit:<Button className="flex items-center gap-3 justify-center" onClick={()=>{setIndex(index);setOpen(true)}}>Edit<MdModeEdit />
+    </Button>
   }))
 
 
@@ -63,7 +66,7 @@ const TodoApp = observer(() => {
       <ConfigProvider theme={AntdTheme}>
         {contextHolder}
         <EditModal details={store.todos[index]} index = {index} centered open={open} onClose={closeModal}  onCancel={closeModal}/>
-    <div className="flex items-center mt-7  h-screen flex-col ">
+    <div className="flex items-center mt-5  h-screen flex-col ">
       <div className="w-full flex flex-col items-center">
       <motion.h1 className="text-4xl">My Todo App</motion.h1>
       <div className="input-area w-full flex items-center justify-center mt-8">
@@ -82,7 +85,7 @@ const TodoApp = observer(() => {
         </Button>
         </div>
       </div>
-      <Table columns={TableColumns} className="w-[70%] mt-9" dataSource={TableData} expandable={{
+      <Table pagination={{pageSize:5}} columns={TableColumns} className="w-[70%] mt-9" dataSource={TableData} expandable={{
           expandedRowRender: (record) => <p style={{ margin: 0 }}>{record.fullDescription}</p>,
       }}/>
     </div>
