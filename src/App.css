@@ -1,0 +1,15 @@
+.done{
+    background-color: #059669;
+    color: white;
+}
+
+.not-done{
+    background-color: red;
+    color: white;
+}
+
+.ant-modal-body{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
