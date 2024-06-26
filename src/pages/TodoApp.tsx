@@ -16,16 +16,7 @@ const TodoApp = observer(() => {
   const [index,setIndex]  = useState<number>(0);
 
   const [messageApi, contextHolder] = message.useMessage();
-
-  const warning = () => {
-    messageApi.open({
-      type: 'error',
-      content: 'Cannot Add The Same Todo Twice',
-    });
-  };
-
   const store = useStore();
-
 
 
   const TableData :TableDetailsType[] = store.todos.map(({name,done,toggle},index)=>({
@@ -37,15 +28,31 @@ const TodoApp = observer(() => {
     edit:<Button onClick={()=>{setIndex(index);setOpen(true)}}>Edit</Button>
   }))
 
+
+
+  
+  const warning = (message:string) => {
+    messageApi.open({
+      type: 'error',
+      content: message,
+    });
+  };
+
+
   const closeModal = ()=>{
     setOpen(false);
     setIndex(-1);
   } 
 
   const AddTodo = () => {
+    if(!input.length || input.length < 5){
+      warning('Enter atleast 5 characters');
+      return;
+    }
+
     for (let todo of store.todos) {
       if (todo.name === input) {
-        warning();
+        warning('Cannot Add The Same Todo Twice');
         return;
       }
     }

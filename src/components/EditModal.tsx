@@ -4,10 +4,6 @@ import { AntdModal } from './AntdModal'
 import { ModalDetailsTypes } from '../Types';
 
 
-
-
-
-
 export const EditModal:React.FC<ModalDetailsTypes> = ({details,index,...restProps}) => {
   const  [value,setValue] = useState<string>(details?.name)
 
