@@ -21,20 +21,17 @@ const TodoApp = observer(() => {
   const store = useStore();
 
 
-  const TableData :TableDetailsType[] = store.todos.filter(item=>item.name.startsWith(input)).map(({name,done,toggle},index)=>{
-    const data = {
+  const TableData :TableDetailsType[] = store.todos.map((item,index)=>({...item,id:index})).filter(item=>item.name.startsWith(input)).map(({name,done,toggle,id},index)=>{
+    return {
+      id,
       key:index,
       name: name.length>10 ? name.slice(0,10) + "...." :name ,
       fullDescription: name,
       done:<div onClick={toggle} className="cursor-pointer">{done?"Done":"Not Done"}</div>,
-      delete:<a className="flex items-center gap-3 text-red-500 justify-center hover:text-red" onClick={()=>store.deleteTodo(index)}>Delete <FaRegTrashCan /></a>,
+      delete:<a className="flex items-center gap-3 text-red-500 justify-center hover:text-red" onClick={()=>store.deleteTodo(id)}>Delete <FaRegTrashCan /></a>,
       edit:<Button className="flex items-center gap-3 justify-center" onClick={()=>{setIndex(index);setOpen(true)}}>Edit<MdModeEdit />
       </Button>
     }
-   
-    return data;
-
-
 })
 
 

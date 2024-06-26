@@ -14,6 +14,7 @@ export interface AntdModalProps extends ModalProps{
   
 
   export interface TableDetailsType{
+    id:number;
     key:React.Key;
     name:string;
     done: ReactNode;
